@@ -2,7 +2,7 @@ import React from 'react';
 
 import {login} from "../../service/auth/auth.service";
 
-import style from "./authorization.mudule.scss"
+import style from "./authorization.module.scss"
 
 const Authorization = ({isAuthorized, setIsAuthorized}) => {
   const authorize = async () => {
