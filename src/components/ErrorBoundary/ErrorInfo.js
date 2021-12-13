@@ -18,9 +18,7 @@ const ErrorInfo = ({ error }) => {
       }}
     >
       <p>{description}</p>
-      <button onClick={() => document.location.reload()}>
-        Перезагрузить страницу
-      </button>
+      <button onClick={() => document.location.reload()}>Reload page</button>
     </div>
   );
 };
