@@ -8,7 +8,6 @@ class ErrorBoundary extends Component {
   }
 
   static getDerivedStateFromError(error) {
-    debugger;
     return { hasError: true, error: error };
   }
 
