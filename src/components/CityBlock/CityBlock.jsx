@@ -72,9 +72,9 @@ const CityBlock = ({
         </>
       );
     }
-    return Object.keys(currWeatherObj).map((item) => {
+    return Object.keys(currWeatherObj).map((item, index) => {
       return currWeatherObj[item].value ? (
-        <p className={style.contentItem}>
+        <p key={index} className={style.contentItem}>
           <span className={style.contentLabel}>{item}:</span>{" "}
           {currWeatherObj[item].value && (
             <span className={style.contentDescription}>
