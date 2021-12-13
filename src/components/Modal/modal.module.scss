@@ -10,17 +10,34 @@
   height: 350px;
   width: 350px;
   transform: translate(-50%, -50%);
-  border: 2px solid gray;
+  border: none;
   border-radius: 8px;
   background-color: #fff;
+  box-shadow: 1px 1px 5px 0 #7f7f7f;
 }
 
 .cityInput {
+  height: 1.5rem;
+  padding: 5px;
   font-size: 16px;
+  border: 1px solid #7f7f7f;
+  border-radius: 4px;
+  outline: none;
 }
 
 .okButton {
   padding: 5px 30px;
   font-size: 16px;
   cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  transition: 0.15s;
+  box-shadow: 1px 1px 3px 0 #5f5f5f;
+  outline: none;
+  &:hover {
+    box-shadow: 1px 1px 5px 0 #5f5f5f;
+  }
+  &:active {
+    transform: scale(0.97, 0.97);
+  }
 }
