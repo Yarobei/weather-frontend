@@ -3,16 +3,18 @@ import React, { useEffect, useState } from "react";
 import Authorization from "./components/Authorization/Authorization";
 import WeatherBlockWrap from "./components/WeatherBlock/WeatherBlockWrap";
 
+import { checkAuthorization } from "./service/auth/auth.service";
+
 import style from "./app.module.scss";
 
 const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    checkAuthorization();
+    checkIsAuthorized();
   }, []);
 
-  const checkAuthorization = async () => {
+  const checkIsAuthorized = async () => {
     try {
       await checkAuthorization();
       setIsAuthorized(true);
