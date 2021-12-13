@@ -20,19 +20,21 @@ const CityBlock = ({
     setIsPinned(
       Boolean(isPinnedStored?.find((item) => item.index === index).city)
     );
-    (async () => {
-      setCurrWeather(null);
-      if (city && isAuthorized) {
-        try {
-          const weatherResponse = await getWeatherByCity(city);
-          const weather = await weatherResponse.json();
-          setCurrWeather(weather);
-        } catch (error) {
-          setError(error);
-        }
-      }
-    })();
+    setCurrWeather(null);
+    if (city && isAuthorized) {
+      getData();
+    }
   }, [city]);
+
+  const getData = async () => {
+    try {
+      const weatherResponse = await getWeatherByCity(city);
+      const weather = await weatherResponse.json();
+      setCurrWeather(weather);
+    } catch (error) {
+      setError(error);
+    }
+  };
 
   const handleModalOpen = () => {
     setModalProps({ index, isOpen: true });
