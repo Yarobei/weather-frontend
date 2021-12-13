@@ -30,7 +30,6 @@ const CityBlock = ({
     try {
       const weatherResponse = await getWeatherByCity(city);
       const weather = await weatherResponse.json();
-      debugger;
       setCurrWeather(weather);
     } catch (error) {
       setError(error);
