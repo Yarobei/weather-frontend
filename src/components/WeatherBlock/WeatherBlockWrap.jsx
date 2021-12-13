@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import style from "./weather-block-wrap.module.scss";
 import CityBlock from "../CityBlock/CityBlock";
 import Modal from "../Modal/Modal";
+
+import style from "./weather-block-wrap.module.scss";
 
 const defaultArr = [
   { index: 0, city: "" },
@@ -31,10 +32,6 @@ const WeatherBlockWrap = ({ isAuthorized, setIsAuthorized }) => {
       console.log(err);
     }
   }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem("storedCities", JSON.stringify(cities));
-  // }, [cities]);
 
   const handlePinCity = (isPin, index, city) => {
     const storedArrJson = localStorage.getItem("storedCities");

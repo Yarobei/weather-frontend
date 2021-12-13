@@ -1,14 +1,33 @@
 .wrap {
   position: relative;
-  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 10px 10px;
   width: 300px;
   height: 300px;
-  max-width: calc(25% - 20px);
-  background-color: #fafafa;
+  max-width: calc(25% - 40px);
+  background-color: #d5d5d5;
+  border-radius: 8px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.addButton {
+  padding: 5px 10px;
+  align-self: center;
+  justify-self: flex-end;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .pinButton {
   position: absolute;
   top: 5px;
   right: 5px;
+  cursor: pointer;
 }

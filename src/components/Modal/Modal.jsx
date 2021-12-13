@@ -31,9 +31,15 @@ const Modal = ({ modalProps, setModalProps, cities, setCities }) => {
       onRequestClose={handleClose}
     >
       <h3>Enter city name</h3>
-      <input type="text" onChange={handleCityChange} />
+      <input
+        className={style.cityInput}
+        type="text"
+        onChange={handleCityChange}
+      />
       <br />
-      <button onClick={handleAddCity}>Ok</button>
+      <button className={style.okButton} onClick={handleAddCity}>
+        Ok
+      </button>
     </ReactModal>
   );
 };

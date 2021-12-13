@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const authResponse = await checkAuthorization();
-      if (authResponse.status === 200) {
+      if (authResponse?.status === 200) {
         setIsAuthorized(true);
       } else {
         setIsAuthorized(false);
