@@ -30,6 +30,7 @@ const CityBlock = ({
     try {
       const weatherResponse = await getWeatherByCity(city);
       const weather = await weatherResponse.json();
+      debugger;
       setCurrWeather(weather);
     } catch (error) {
       setError(error);
@@ -45,29 +46,65 @@ const CityBlock = ({
     handlePinCity(!isPinned, index, city);
   };
 
+  const cityBlockContent = () => {
+    const currWeatherObj = {
+      Temperature: {
+        value: currWeather?.main?.temp,
+        unit: "°C",
+      },
+      Humidity: {
+        value: currWeather?.main?.humidity,
+        unit: "%",
+      },
+      "Feels like": {
+        value: currWeather?.main?.feels_like,
+        unit: "°C",
+      },
+      "Weather description": {
+        value: currWeather?.weather?.[0]?.description,
+        unit: null,
+      },
+    };
+    if (error) {
+      return (
+        <>
+          <p>{error.status}</p>
+          <p>{error.statusText}</p>
+        </>
+      );
+    }
+    return Object.keys(currWeatherObj).map((item) => {
+      return currWeatherObj[item].value ? (
+        <p className={style.contentItem}>
+          <span className={style.contentLabel}>{item}:</span>{" "}
+          {currWeatherObj[item].value && (
+            <span className={style.contentDescription}>
+              {currWeatherObj[item].value} {currWeatherObj[item].unit}
+            </span>
+          )}
+        </p>
+      ) : null;
+    });
+  };
+
   return (
     <div className={style.wrap}>
       <div className={style.content}>
         {city && (
-          <button className={style.pinButton} onClick={handlePin}>
+          <button
+            className={`${style.pinButton} ${style.animateButton}`}
+            onClick={handlePin}
+          >
             {isPinned ? "Unpin" : "Pin"}
           </button>
         )}
-        <p>City: {city}</p>
-        {currWeather ? (
-          <>
-            <p>Temperature: {currWeather.main.temp}</p>
-            <p>Feels like: {currWeather.main.feels_like}</p>
-            <p>Weather description: {currWeather.weather[0].description}</p>
-          </>
-        ) : error ? (
-          <>
-            <p>{error.status}</p>
-            <p>{error.statusText}</p>
-          </>
-        ) : null}
+        <p>City: {currWeather?.name ?? "-"}</p>
+        {cityBlockContent()}
       </div>
-      <button className={style.addButton} onClick={handleModalOpen}>
+      <button
+        className={`${style.addButton} ${style.animateButton}`}
+        onClick={handleModalOpen}
+      >
         {city ? "Change city" : "Add city"}
       </button>
     </div>
