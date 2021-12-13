@@ -8,6 +8,13 @@ export const getWeatherByCity = (city) => {
     },
     credentials: "include",
   })
-    .then((res) => res)
-    .catch((err) => console.log(err));
+    .then((res) => {
+      if (res.ok) {
+        return res;
+      }
+      return Promise.reject({ status: res.status, statusText: res.statusText });
+    })
+    .catch((err) => {
+      throw err;
+    });
 };

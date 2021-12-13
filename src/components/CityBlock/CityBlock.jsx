@@ -12,6 +12,7 @@ const CityBlock = ({
 }) => {
   const [currWeather, setCurrWeather] = useState(null);
   const [isPinned, setIsPinned] = useState(false);
+  const [error, setError] = useState(null);
   const { index, city } = cityItem;
 
   useEffect(() => {
@@ -21,15 +22,13 @@ const CityBlock = ({
     );
     (async () => {
       setCurrWeather(null);
-      debugger;
       if (city && isAuthorized) {
-        const weatherResponse = await getWeatherByCity(city);
-        debugger;
-        if (weatherResponse?.status === 200) {
+        try {
+          const weatherResponse = await getWeatherByCity(city);
           const weather = await weatherResponse.json();
           setCurrWeather(weather);
-        } else {
-          throw new Error();
+        } catch (error) {
+          setError(error);
         }
       }
     })();
@@ -53,13 +52,18 @@ const CityBlock = ({
           </button>
         )}
         <p>City: {city}</p>
-        {currWeather && (
+        {currWeather ? (
           <>
             <p>Temperature: {currWeather.main.temp}</p>
             <p>Feels like: {currWeather.main.feels_like}</p>
             <p>Weather description: {currWeather.weather[0].description}</p>
           </>
-        )}
+        ) : error ? (
+          <>
+            <p>{error.status}</p>
+            <p>{error.statusText}</p>
+          </>
+        ) : null}
       </div>
       <button className={style.addButton} onClick={handleModalOpen}>
         {city ? "Change city" : "Add city"}
