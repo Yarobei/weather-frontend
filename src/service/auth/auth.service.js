@@ -1,4 +1,5 @@
-import {url} from "../../constants/constants";
+import { url } from "../../constants/constants";
+import { handleErrors } from "../../utils/utils";
 
 export const checkAuthorization = () => {
   return fetch(`${url}/authorization`, {
@@ -6,11 +7,13 @@ export const checkAuthorization = () => {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: 'include'
+    credentials: "include",
   })
-    .then((res) => res)
-    .catch((err) => console.log(err));
-}
+    .then(handleErrors)
+    .catch((err) => {
+      throw err;
+    });
+};
 
 export const login = () => {
   return fetch(`${url}/login`, {
@@ -18,8 +21,10 @@ export const login = () => {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: 'include'
+    credentials: "include",
   })
-    .then((res) => res)
-    .catch((err) => console.log(err));
-}
+    .then(handleErrors)
+    .catch((err) => {
+      throw err;
+    });
+};

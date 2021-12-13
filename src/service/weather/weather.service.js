@@ -1,4 +1,5 @@
 import { url } from "../../constants/constants";
+import { handleErrors } from "../../utils/utils";
 
 export const getWeatherByCity = (city) => {
   return fetch(`${url}/weather?cityName=${city}`, {
@@ -8,12 +9,7 @@ export const getWeatherByCity = (city) => {
     },
     credentials: "include",
   })
-    .then((res) => {
-      if (res.ok) {
-        return res;
-      }
-      return Promise.reject({ status: res.status, statusText: res.statusText });
-    })
+    .then(handleErrors)
     .catch((err) => {
       throw err;
     });
