@@ -14,13 +14,16 @@ const Modal = ({ modalProps, setModalProps, cities, setCities }) => {
   };
 
   const handleClose = () => {
+    setCity("");
     setModalProps({ index: null, isOpen: false });
   };
 
   const handleAddCity = () => {
-    const newCities = [...cities];
-    newCities.splice(index, 1, { index, city });
-    setCities(newCities);
+    if (city) {
+      const newCities = [...cities];
+      newCities.splice(index, 1, { index, city });
+      setCities(newCities);
+    }
     handleClose();
   };
 
@@ -35,6 +38,7 @@ const Modal = ({ modalProps, setModalProps, cities, setCities }) => {
         className={style.cityInput}
         type="text"
         onChange={handleCityChange}
+        placeholder={"City"}
       />
       <br />
       <button className={style.okButton} onClick={handleAddCity}>
