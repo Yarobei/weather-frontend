@@ -4,10 +4,6 @@ import style from "./error-boundary.module.scss";
 import commonStyle from "../../common.module.scss";
 
 const ErrorInfo = ({ error }) => {
-  // const title =
-  //   error instanceof Error
-  //     ? "Что-то пошло нет так"
-  //     : error.result.status;
   const description = !(error instanceof Error)
     ? error.result.value
     : undefined;
