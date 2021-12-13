@@ -1,0 +1,13 @@
+.animateButton {
+  cursor: pointer;
+  border: none;
+  transition: 0.15s;
+  box-shadow: 1px 1px 3px 0 #5f5f5f;
+  outline: none;
+  &:hover {
+    box-shadow: 1px 1px 5px 0 #5f5f5f;
+  }
+  &:active {
+    transform: scale(0.97, 0.97);
+  }
+}

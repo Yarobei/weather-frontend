@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getWeatherByCity } from "../../service/weather/weather.service";
 
 import style from "./city-block.module.scss";
+import commonStyles from "../../common.module.scss";
 
 const CityBlock = ({
   cityItem,
@@ -91,7 +92,7 @@ const CityBlock = ({
       <div className={style.content}>
         {city && (
           <button
-            className={`${style.pinButton} ${style.animateButton}`}
+            className={`${style.pinButton} ${commonStyles.animateButton}`}
             onClick={handlePin}
           >
             {isPinned ? "Unpin" : "Pin"}
@@ -101,7 +102,7 @@ const CityBlock = ({
         {cityBlockContent()}
       </div>
       <button
-        className={`${style.addButton} ${style.animateButton}`}
+        className={`${style.addButton} ${commonStyles.animateButton}`}
         onClick={handleModalOpen}
       >
         {city ? "Change city" : "Add city"}

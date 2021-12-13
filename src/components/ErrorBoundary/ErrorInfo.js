@@ -1,5 +1,8 @@
 import React from "react";
 
+import style from "./error-boundary.module.scss";
+import commonStyle from "../../common.module.scss";
+
 const ErrorInfo = ({ error }) => {
   // const title =
   //   error instanceof Error
@@ -18,7 +21,12 @@ const ErrorInfo = ({ error }) => {
       }}
     >
       <p>{description}</p>
-      <button onClick={() => document.location.reload()}>Reload page</button>
+      <button
+        className={`${style.reloadButton} ${commonStyle.animateButton}`}
+        onClick={() => document.location.reload()}
+      >
+        Reload page
+      </button>
     </div>
   );
 };
