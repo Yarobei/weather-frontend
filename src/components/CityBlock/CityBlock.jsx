@@ -68,10 +68,10 @@ const CityBlock = ({
     };
     if (error) {
       return (
-        <>
+        <div className={style.contentError}>
           <p>{error.status}</p>
           <p>{error.statusText}</p>
-        </>
+        </div>
       );
     }
     return Object.keys(currWeatherObj).map((item, index) => {
@@ -91,7 +91,7 @@ const CityBlock = ({
   return (
     <div className={style.wrap}>
       <div className={style.content}>
-        {city && (
+        {currWeather?.name && (
           <button
             className={`${style.pinButton} ${commonStyles.animateButton}`}
             onClick={handlePin}
