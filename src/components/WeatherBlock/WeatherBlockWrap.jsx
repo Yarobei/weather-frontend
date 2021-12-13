@@ -37,7 +37,6 @@ const WeatherBlockWrap = ({ isAuthorized, setIsAuthorized }) => {
     const storedArrJson = localStorage.getItem("storedCities");
     try {
       const storedArr = JSON.parse(storedArrJson);
-      debugger;
       storedArr.splice(index, 1, {
         index,
         city: isPin ? city : "",
