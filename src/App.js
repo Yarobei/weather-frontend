@@ -3,23 +3,23 @@ import React, { useEffect, useState } from "react";
 import Authorization from "./components/Authorization/Authorization";
 import WeatherBlockWrap from "./components/WeatherBlock/WeatherBlockWrap";
 
-import { checkAuthorization } from "./service/auth/auth.service";
-
 import style from "./app.module.scss";
 
 const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      const authResponse = await checkAuthorization();
-      if (authResponse?.status === 200) {
-        setIsAuthorized(true);
-      } else {
-        setIsAuthorized(false);
-      }
-    })();
+    checkAuthorization();
   }, []);
+
+  const checkAuthorization = async () => {
+    try {
+      await checkAuthorization();
+      setIsAuthorized(true);
+    } catch (err) {
+      setIsAuthorized(false);
+    }
+  };
 
   return (
     <div className={style.wrap}>
