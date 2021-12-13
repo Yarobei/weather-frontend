@@ -29,6 +29,7 @@ const CityBlock = ({
 
   const getData = async () => {
     try {
+      setError(false);
       const weatherResponse = await getWeatherByCity(city);
       const weather = await weatherResponse.json();
       setCurrWeather(weather);
