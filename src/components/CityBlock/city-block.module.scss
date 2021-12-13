@@ -15,19 +15,42 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  &Item {
+    margin: 10px 0;
+  }
+  &Label {
+    color: #4f4f4f;
+  }
+  &Description {
+    font-style: italic;
+  }
 }
 
 .addButton {
-  padding: 5px 10px;
+  padding: 7px 15px;
   align-self: center;
   justify-self: flex-end;
   font-size: 16px;
-  cursor: pointer;
+  border-radius: 8px;
 }
 
 .pinButton {
   position: absolute;
   top: 5px;
   right: 5px;
+  border-radius: 4px;
+}
+
+.animateButton {
   cursor: pointer;
+  border: none;
+  transition: 0.15s;
+  box-shadow: 1px 1px 3px 0 #5f5f5f;
+  outline: none;
+  &:hover {
+    box-shadow: 1px 1px 5px 0 #5f5f5f;
+  }
+  &:active {
+    transform: scale(0.97, 0.97);
+  }
 }
