@@ -1,43 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import shallow from "zustand/shallow";
 
-import Authorization from "./components/Authorization/Authorization";
-import WeatherBlockWrap from "./components/WeatherBlock/WeatherBlockWrap";
+import { ContentPreloader } from "./components/ContentPreloader/ContentPreloader";
+import { Authorization } from "./components/Authorization/Authorization";
+import { WeatherBlockWrap } from "./components/WeatherBlock/WeatherBlockWrap";
 
 import { checkAuthorization } from "./service/auth/auth.service";
 
-import style from "./app.module.scss";
+import { useAuthStore } from "./store/auth.store";
 
-const App = () => {
-  const [isAuthorized, setIsAuthorized] = useState(false);
+export const App = () => {
+  const { isAuthorized, isContentLoading } = useAuthStore(
+    (state) => ({
+      isAuthorized: state.isAuthorized,
+      isContentLoading: state.isContentLoading,
+    }),
+    shallow
+  );
 
   useEffect(() => {
-    checkIsAuthorized();
+    checkAuthorization();
   }, []);
 
-  const checkIsAuthorized = async () => {
-    try {
-      await checkAuthorization();
-      setIsAuthorized(true);
-    } catch (err) {
-      setIsAuthorized(false);
-    }
-  };
-
-  return (
-    <div className={style.wrap}>
-      <h1 className={style.header}>Weather App</h1>
-      <Authorization
-        isAuthorized={isAuthorized}
-        setIsAuthorized={setIsAuthorized}
-      />
-      {isAuthorized && (
-        <WeatherBlockWrap
-          isAuthorized={isAuthorized}
-          setIsAuthorized={setIsAuthorized}
-        />
-      )}
-    </div>
-  );
+  if (isContentLoading) {
+    return <ContentPreloader />;
+  } else if (!isAuthorized) {
+    return <Authorization />;
+  }
+  return <WeatherBlockWrap />;
 };
-
-export default App;
