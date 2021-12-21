@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+
+import { App } from "./App";
+import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
+
+import "antd/dist/antd.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
