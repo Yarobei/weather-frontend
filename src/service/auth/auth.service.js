@@ -22,15 +22,34 @@ export const checkAuthorization = () => {
     });
 };
 
-export const login = () => {
+export const login = (credentials) => {
   return fetch(`${url}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
+    body: JSON.stringify(credentials),
   })
     .then(handleErrors)
+    .catch((err) => {
+      throw err;
+    });
+};
+
+export const logOutRequest = () => {
+  return fetch(`${url}/logOut`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(handleErrors)
+    .then(() => {
+      localStorage.removeItem("storedCities");
+      useAuthStore.getState().setIsAuthorized(false);
+    })
     .catch((err) => {
       throw err;
     });
