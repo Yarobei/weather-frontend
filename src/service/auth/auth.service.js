@@ -1,5 +1,6 @@
 import { url } from "../../constants/constants";
 import { handleErrors } from "../../utils/utils";
+import { useAuthStore } from "../../store/auth.store";
 
 export const checkAuthorization = () => {
   return fetch(`${url}/authorization`, {
@@ -9,7 +10,13 @@ export const checkAuthorization = () => {
     },
     credentials: "include",
   })
+    .finally(() => useAuthStore.getState().setIsContentLoading(false))
     .then(handleErrors)
+    .then((res) => {
+      if (res?.ok) {
+        useAuthStore.getState().setIsAuthorized(true);
+      }
+    })
     .catch((err) => {
       throw err;
     });
