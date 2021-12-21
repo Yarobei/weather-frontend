@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "antd": "4.17.3",
     "node-sass": "4.14.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-modal": "3.14.4",
-    "react-scripts": "4.0.3"
+    "react-scripts": "5.0.0",
+    "zustand": "3.6.7"
   },
   "scripts": {
     "start": "react-scripts start",
