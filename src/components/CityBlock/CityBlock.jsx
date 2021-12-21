@@ -1,115 +1,95 @@
 import React, { useEffect, useState } from "react";
+import { Button, Card, message, Switch } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+
+import { CityBlockContent } from "./CityBlockContent";
 
 import { getWeatherByCity } from "../../service/weather/weather.service";
 
 import style from "./city-block.module.scss";
-import commonStyles from "../../common.module.scss";
 
-const CityBlock = ({
-  cityItem,
-  setModalProps,
-  isAuthorized,
+export const CityBlock = ({
+  cityName,
+  handleAddCityModalOpen,
+  handleRemoveCity,
+  isPinned,
   handlePinCity,
 }) => {
   const [currWeather, setCurrWeather] = useState(null);
-  const [isPinned, setIsPinned] = useState(false);
-  const [error, setError] = useState(null);
-  const { index, city } = cityItem;
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const isPinnedStored = JSON.parse(localStorage.getItem("storedCities"));
-    setIsPinned(
-      Boolean(isPinnedStored?.find((item) => item.index === index).city)
-    );
-    setCurrWeather(null);
-    if (city && isAuthorized) {
+    if (cityName) {
       getData();
+    } else {
+      setCurrWeather(null);
     }
-  }, [city]);
+  }, [cityName]);
 
   const getData = async () => {
+    setIsLoading(true);
     try {
-      setError(false);
-      const weatherResponse = await getWeatherByCity(city);
-      const weather = await weatherResponse.json();
-      setCurrWeather(weather);
+      const weatherResponse = await getWeatherByCity(cityName);
+      if (weatherResponse.ok) {
+        const weather = await weatherResponse.json();
+        setCurrWeather(weather);
+      } else {
+        handleRemoveCity();
+        message.warning(weatherResponse.statusText);
+      }
     } catch (error) {
-      setError(error);
+      throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleModalOpen = () => {
-    setModalProps({ index, isOpen: true });
-  };
-
-  const handlePin = () => {
-    setIsPinned(!isPinned);
-    handlePinCity(!isPinned, index, city);
-  };
-
-  const cityBlockContent = () => {
-    const currWeatherObj = {
-      Temperature: {
-        value: currWeather?.main?.temp,
-        unit: "°C",
-      },
-      Humidity: {
-        value: currWeather?.main?.humidity,
-        unit: "%",
-      },
-      "Feels like": {
-        value: currWeather?.main?.feels_like,
-        unit: "°C",
-      },
-      "Weather description": {
-        value: currWeather?.weather?.[0]?.description,
-        unit: null,
-      },
-    };
-    if (error) {
-      return (
-        <div className={style.contentError}>
-          <p>{error.status}</p>
-          <p>{error.statusText}</p>
-        </div>
-      );
+  const contentRender = () => {
+    if (currWeather) {
+      return <CityBlockContent currWeather={currWeather} />;
     }
-    return Object.keys(currWeatherObj).map((item, index) => {
-      return currWeatherObj[item].value ? (
-        <p key={index} className={style.contentItem}>
-          <span className={style.contentLabel}>{item}:</span>{" "}
-          {currWeatherObj[item].value && (
-            <span className={style.contentDescription}>
-              {currWeatherObj[item].value} {currWeatherObj[item].unit}
-            </span>
-          )}
-        </p>
-      ) : null;
-    });
+    return (
+      <Button
+        className={style.addButton}
+        shape={"circle"}
+        size={"large"}
+        icon={<PlusOutlined />}
+        onClick={handleAddCityModalOpen}
+      />
+    );
   };
 
   return (
-    <div className={style.wrap}>
-      <div className={style.content}>
-        {currWeather?.name && (
-          <button
-            className={`${style.pinButton} ${commonStyles.animateButton}`}
-            onClick={handlePin}
+    <Card
+      title={currWeather?.name}
+      className={style.wrap}
+      bordered={true}
+      loading={isLoading}
+      extra={
+        currWeather && (
+          <Switch
+            size={"small"}
+            defaultChecked={isPinned}
+            onChange={handlePinCity}
+          />
+        )
+      }
+      actions={
+        currWeather && [
+          <Button
+            type={"primary"}
+            key={"change"}
+            onClick={handleAddCityModalOpen}
           >
-            {isPinned ? "Unpin" : "Pin"}
-          </button>
-        )}
-        <p>City: {currWeather?.name ?? "-"}</p>
-        {cityBlockContent()}
-      </div>
-      <button
-        className={`${style.addButton} ${commonStyles.animateButton}`}
-        onClick={handleModalOpen}
-      >
-        {city ? "Change city" : "Add city"}
-      </button>
-    </div>
+            Change
+          </Button>,
+          <Button danger={true} onClick={handleRemoveCity}>
+            Remove
+          </Button>,
+        ]
+      }
+    >
+      <div className={style.content}>{contentRender()}</div>
+    </Card>
   );
 };
-
-export default CityBlock;
