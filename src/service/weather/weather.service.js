@@ -3,7 +3,7 @@ import { handleErrors } from "../../utils/utils";
 
 export const getWeatherByCity = (city) => {
   return fetch(`${url}/weather?cityName=${city}`, {
-    method: "get",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
