@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Modal, Typography, Form, Input, Space } from "antd";
 
 export const AddCityModal = ({ isOpen, handleClose, handleAddCity }) => {
   const [form] = Form.useForm();
 
+  const inputRef = useRef(null);
+
   useEffect(() => {
     if (!isOpen) {
       form.resetFields();
+    } else {
+      setTimeout(() => inputRef?.current.focus(), 0);
     }
   }, [isOpen]);
 
@@ -27,7 +31,7 @@ export const AddCityModal = ({ isOpen, handleClose, handleAddCity }) => {
             name={"city-name"}
             rules={[{ required: true, message: "City name is required" }]}
           >
-            <Input placeholder={"City name *"} />
+            <Input ref={inputRef} placeholder={"City name *"} />
           </Form.Item>
         </Form>
       </Space>
